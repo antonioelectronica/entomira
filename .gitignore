@@ -1,0 +1,35 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+
+# Secrets
+.env
+*.env
+!.env.example
+secrets/
+
+# Models and data
+*.pt
+*.onnx
+*.engine
+models/
+datasets/
+runs/
+data/
+uploads/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite3
+
+# Builds
+worker/build/
+worker/dist/
+*.spec
+*.exe
+
+.DS_Store
+Thumbs.db
+*.log

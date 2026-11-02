@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="entomiraTitleR entomiraDescR">
+  <title id="entomiraTitleR">ENTOMIRA (versión reversa para fondos oscuros)</title>
+  <desc id="entomiraDescR">Variante del logotipo ENTOMIRA con el nombre en tono claro, pensada para fondos oscuros o de marca.</desc>
+
+  <defs>
+    <linearGradient id="leafGradR" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00544D"/>
+      <stop offset="100%" stop-color="#008F82"/>
+    </linearGradient>
+    <radialGradient id="lensGradR" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#D9FFA6"/>
+      <stop offset="55%" stop-color="#B4FF48"/>
+      <stop offset="100%" stop-color="#8CC21E"/>
+    </radialGradient>
+    <filter id="softShadowR" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <g stroke="#4FD1C0" stroke-width="3" stroke-linecap="round" opacity="0.5" fill="none">
+    <path d="M300,180 V150 H330"/>
+    <path d="M500,180 V150 H470"/>
+    <path d="M300,310 V340 H330"/>
+    <path d="M500,310 V340 H470"/>
+  </g>
+
+  <g filter="url(#softShadowR)">
+    <path d="M0,0 Q34,-50 0,-100 Q-34,-50 0,0 Z" fill="url(#leafGradR)" transform="translate(400,300) rotate(-35)"/>
+    <path d="M0,0 Q34,-50 0,-100 Q-34,-50 0,0 Z" fill="url(#leafGradR)" transform="translate(400,300) rotate(35)"/>
+
+    <path d="M400,300 Q385,220 368,178" fill="none" stroke="#7CE0D2" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="368" cy="178" r="3.5" fill="#7CE0D2"/>
+    <path d="M400,300 Q415,220 432,178" fill="none" stroke="#7CE0D2" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="432" cy="178" r="3.5" fill="#7CE0D2"/>
+
+    <circle cx="400" cy="300" r="30" fill="url(#lensGradR)" opacity="0.2"/>
+    <circle cx="400" cy="300" r="22" fill="none" stroke="#B4FF48" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="400" cy="300" r="17" fill="url(#lensGradR)"/>
+  </g>
+
+  <text x="400" y="430" text-anchor="middle" font-family="'Chillax','Nunito',system-ui,-apple-system,sans-serif" font-size="66" font-weight="600" letter-spacing="10" fill="#F5F4F2">ENTOMIRA</text>
+  <text x="400" y="464" text-anchor="middle" font-family="'Satoshi','Open Sans',system-ui,-apple-system,sans-serif" font-size="15" font-weight="500" letter-spacing="4" fill="#B4FF48">MONITORIZACIÓN INTELIGENTE DE PLAGAS</text>
+</svg>

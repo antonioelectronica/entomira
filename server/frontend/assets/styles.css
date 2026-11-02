@@ -1,0 +1,749 @@
+/* ===== ENTOMIRA · identidad visual grodi (tema claro) ===== */
+:root{
+  /* --- paleta corporativa grodi --- */
+  --teal:#006F66;        /* Deep Teal · color primario / interfaz */
+  --teal-700:#00544D;    /* teal oscuro · hover */
+  --teal-tint:#E7F0EF;   /* fondo teal muy suave */
+  --lima:#B4FF48;        /* Vibrant Lime · acento / detección */
+  --lima-ink:#5C9A0E;    /* lima legible sobre blanco (texto/segmentos) */
+  --rojo:#E04449;        /* Yield Bloom · alertas / plaga */
+  --smoke:#F5F4F2;       /* White Smoke · fondo de página */
+  --tinta:#1D1E1C;       /* Dark Grodi · texto principal */
+  --gris:#878787;        /* Grey Grodi · texto atenuado */
+
+  /* --- variantes ACCESIBLES para texto pequeño -------------------------------------
+     Los tres colores de arriba son de marca y NO se tocan: siguen mandando en fondos,
+     bordes, iconos y superficies. Pero medidos sobre blanco no llegan al 4,5:1 que pide
+     WCAG AA para texto normal, y esta web se lee **en un invernadero con sol directo**:
+         --gris     #878787  ->  3,59:1   NO PASA
+         --lima-ink #5C9A0E  ->  3,45:1   NO PASA
+         --rojo     #E04449  ->  4,12:1   NO PASA  (y es el color de las ALERTAS)
+     Lo detecto Codex en la mentoria de diseño del 2026-09-19 --dio 3,59 y 3,45 exactos-- y
+     al verificarlo aparecio ademas el rojo, que no habia mencionado nadie. Una alerta que no
+     se lee al sol es una alerta perdida.
+     Estas variantes son el MISMO tono con la luminosidad justa para cruzar el umbral: el
+     cambio es casi imperceptible y la marca no se mueve. Usar SIEMPRE estas en texto. */
+  --gris-texto:#767676;     /* 4,54:1 */
+  --lima-texto:#4E830C;     /* 4,59:1 */
+  --rojo-texto:#DD353A;     /* 4,52:1 */
+
+  /* --- alias semánticos (usados por los componentes) --- */
+  --panel:#FFFFFF; --panel-2:#FAFAF9; --linea:#E4E3DF; --linea-2:#D4D3CE;
+  --texto:var(--tinta); --texto-mute:var(--gris-texto);
+  --sombra:0 6px 22px rgba(29,30,28,.08);
+  --radio:14px; --radio-s:10px;
+  --fuente:'Satoshi','Open Sans',system-ui,-apple-system,Roboto,sans-serif;
+  --fuente-titulo:'Chillax','Nunito','Satoshi',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--fuente); color:var(--texto);
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(0,111,102,.06), transparent 60%),
+    radial-gradient(900px 500px at -10% 8%, rgba(180,255,72,.10), transparent 55%),
+    var(--smoke);
+  min-height:100vh;
+}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{margin:0 0 .4em;font-family:var(--fuente-titulo);font-weight:600;letter-spacing:.2px}
+
+/* ---- Topbar ---- */
+.topbar{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  padding:12px 22px;position:sticky;top:0;z-index:30;
+  background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.82));
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--linea);
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:40px;height:40px}
+.brand-name{font-family:var(--fuente-titulo);font-weight:600;font-size:20px;letter-spacing:2px;color:var(--teal)}
+.brand-sub{color:var(--texto-mute);font-size:12px;margin-left:4px;display:none}
+@media(min-width:900px){.brand-sub{display:inline}}
+.mainnav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.mainnav a{
+  padding:8px 16px;border-radius:999px;color:var(--texto-mute);font-weight:600;
+  transition:.15s;
+}
+.mainnav a:hover{color:var(--teal);background:var(--teal-tint)}
+.mainnav a.active{color:#fff;background:var(--teal)}
+.status-pills{display:flex;gap:8px}
+.pill{
+  font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;
+  border:1px solid var(--linea);color:var(--texto-mute);white-space:nowrap;
+  background:#fff;cursor:default;
+}
+.pill.ok{color:var(--teal-700);background:var(--lima);border-color:transparent}
+.pill.off{color:#fff;background:var(--rojo);border-color:transparent}
+button.pill{cursor:pointer}
+
+/* --- gadget de almacenamiento (pastilla + panel) --- */
+.pill.disk.ok{color:var(--teal);background:var(--teal-tint);border-color:transparent}
+.pill.disk.aviso{color:#8A5A00;background:#FFE9B8;border-color:transparent}
+.pill.disk.critico{color:#fff;background:var(--rojo);border-color:transparent}
+.storage{min-width:min(420px,78vw)}
+.st-big{font-family:var(--fuente-titulo);color:var(--texto);margin-bottom:10px}
+.st-big b{font-size:30px;line-height:1}
+.st-big span{color:var(--texto-mute);font-size:14px}
+.st-bar{height:14px;border-radius:999px;background:var(--teal-tint);overflow:hidden;
+  border:1px solid var(--linea)}
+.st-fill{height:100%;border-radius:999px;transition:width .4s ease}
+.st-fill.ok{background:linear-gradient(90deg,var(--teal),var(--lima-ink))}
+.st-fill.aviso{background:linear-gradient(90deg,#E8871B,#F7A93B)}
+.st-fill.critico{background:linear-gradient(90deg,#B4262A,var(--rojo))}
+.st-legend{margin-top:6px;font-size:12px;color:var(--texto-mute)}
+.st-alert{margin-top:12px;padding:10px 12px;border-radius:var(--radio-s);font-size:13px;
+  line-height:1.45}
+.st-alert.aviso{background:#FFF6E2;color:#8A5A00}
+.st-alert.critico{background:#FDECEC;color:#9B2B2E}
+.st-rows{margin-top:14px;border-top:1px solid var(--linea)}
+.st-row{display:flex;align-items:baseline;gap:8px;padding:9px 2px;
+  border-bottom:1px solid var(--linea);font-size:13px}
+.st-k{flex:1;color:var(--texto-mute)}
+.st-v{font-weight:700}
+.st-x{color:var(--texto-mute);font-size:12px}
+.st-note{margin-top:12px;font-size:12px;color:var(--texto-mute);line-height:1.5}
+
+/* ---- Layout ---- */
+.app{max-width:1280px;margin:0 auto;padding:24px 22px 60px}
+.view-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+/* Ritmo vertical: el espacio entre bloques venia de estilos sueltos en cada vista y salia
+   distinto en cada pantalla. Un solo valor, aqui, para que todas respiren igual. */
+.app>h2,.app>.view-head{margin-top:28px}
+.app>h2:first-child,.app>.view-head:first-child{margin-top:0}
+.card+.card{margin-top:0}
+.view-head h1{font-size:26px}
+.view-head .spacer{flex:1}
+.muted{color:var(--texto-mute)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+
+/* ---- Controles ---- */
+select,input,textarea{
+  font-family:inherit;font-size:14px;color:var(--texto);
+  background:#fff;border:1px solid var(--linea-2);border-radius:var(--radio-s);
+  padding:9px 12px;outline:none;transition:.15s;
+}
+select:focus,input:focus,textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,111,102,.12)}
+label.field{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--texto-mute)}
+/* UN BOTON DESACTIVADO TIENE QUE PARECERLO.
+   No habia ninguna regla `:disabled` en toda la hoja, asi que un boton desactivado se veia
+   exactamente igual que uno pulsable: se podia avisar «la IA no esta en marcha» y dejar al
+   lado un boton que invitaba a pulsarlo igualmente. Afecta a todos los que se desactivan
+   mientras trabajan —«Tomar foto», «Reiniciar placa», «Analizar»—, no solo a la demo. */
+.btn:disabled,.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none;filter:grayscale(.35)}
+.btn:disabled:hover,.btn[disabled]:hover{transform:none;filter:grayscale(.35)}
+
+/* Un boton no parte su texto en dos lineas: crece a lo ancho o se acorta la etiqueta.
+   «Sin correccion» partia en dos y dejaba su fila con un boton mas alto que los demas. */
+.btn{white-space:nowrap;
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;
+  font-size:14px;padding:9px 16px;border-radius:var(--radio-s);border:1px solid transparent;
+  background:var(--teal);color:#fff;transition:.15s;
+}
+.btn:hover{background:var(--teal-700)}
+.btn.amber{background:var(--lima);color:var(--teal-700)}
+.btn.amber:hover{background:#a2ef2f}
+.btn.ghost{background:#fff;border-color:var(--linea-2);color:var(--texto)}
+.btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
+.btn.danger{background:#fff;border-color:var(--rojo);color:var(--rojo-texto)}
+.btn.danger:hover{background:var(--rojo);color:#fff}
+.btn.sm{padding:6px 11px;font-size:12px}
+/* `display:inline-flex` gana a `[hidden]`: sin esta línea, poner `hidden` en un botón NO lo
+   oculta. Es la misma trampa que dejó el visor con el «Reintentar» siempre a la vista. */
+.btn[hidden]{display:none}
+
+/* ---- Tarjetas / grid ---- */
+/* Rejillas que RELLENAN el ancho.
+   Con `auto-fill` una sola tarjeta se quedaba a 300 px en una pantalla de 1280, con un
+   desierto a la derecha; `auto-fit` colapsa las pistas vacias y deja que la tarjeta crezca.
+   El `max` evita el extremo contrario: una tarjeta unica de 1.200 px de ancho tampoco se lee. */
+.grid{display:grid;gap:16px}
+.grid.gal{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.grid.traps{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.grid.gh{grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr))}
+.grid.users{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+/* El tope va en la TARJETA, no en la pista: `min(1fr,520px)` mezcla flex con longitud dentro de
+   `minmax()`, que es CSS invalido — el navegador tira la regla entera y la rejilla se quedaba
+   como estaba. Con el tope aqui, una tarjeta sola crece hasta un ancho legible y para. */
+.grid.traps>.card{max-width:560px}
+.grid.gh>.card{max-width:600px}
+.grid.users>.card{max-width:680px}
+.card{
+  background:var(--panel);
+  border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden;
+  box-shadow:var(--sombra);transition:.15s;
+}
+.card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,111,102,.12)}
+.card .body{padding:14px}
+.card .row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+/* Fila de botones: AGRUPADOS a la izquierda, no repartidos por el ancho de la tarjeta.
+   Con `space-between` heredado, «Panel · Config · Editar · borrar» quedaban a distancias
+   distintas segun lo ancha que fuera la tarjeta, y el de borrar acababa lejisimos, como si no
+   fuera del mismo grupo. Se separa solo el destructivo, y a proposito. */
+.card .acciones{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;
+    padding-top:12px;border-top:1px solid var(--linea)}
+.card .acciones .peligro{margin-left:auto}
+/* Las etiquetas se leian con dificultad: gris claro sobre blanco roto es ~2:1 de contraste.
+   Se les sube el peso y el color, y la gris pasa a tener fondo propio en vez de casi ninguno. */
+.tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.2px;
+  background:var(--teal-tint);color:var(--teal)}
+.tag.amber{background:rgba(180,255,72,.28);color:var(--lima-texto)}
+.tag.gray{background:rgba(135,135,135,.16);color:var(--gris-texto)}
+
+/* ---- Galería ---- */
+/* Galeria: el pie de cada celda medía casi lo mismo que la miniatura. Con 120 fotos por
+   pagina eso son miles de pixeles de scroll por informacion que casi nunca se lee entera. */
+.gal-card .body{padding:8px 10px 9px}
+.gal-card b{font-size:13px}
+.gal-sitio{font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.thumb-wrap{position:relative;aspect-ratio:4/3;background:#ECEBE7;overflow:hidden}
+.thumb-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb-wrap .count{
+  position:absolute;top:8px;right:8px;background:rgba(29,30,28,.82);
+  color:var(--lima);font-weight:800;font-size:13px;padding:4px 9px;border-radius:999px;
+  border:1px solid rgba(180,255,72,.5);
+}
+.thumb-wrap .demo-badge{position:absolute;top:8px;left:8px;background:var(--lima);
+  color:var(--teal-700);font-weight:800;font-size:10px;padding:3px 8px;border-radius:6px}
+.bbox-layer{position:absolute;inset:0;pointer-events:none}
+.bbox{position:absolute;border:2px solid var(--lima);border-radius:3px;
+  box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.bbox span{position:absolute;top:-16px;left:-2px;background:var(--teal);
+  color:#fff;font-size:9px;font-weight:800;padding:0 4px;border-radius:3px;white-space:nowrap}
+
+/* ---- Paginador (galería) ---- */
+.pager{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.page-btn{min-width:38px;height:38px;padding:0 10px;border-radius:var(--radio-s);border:1px solid var(--linea-2);
+  background:#fff;color:var(--texto);font-weight:700;font-size:14px;cursor:pointer;transition:.15s}
+.page-btn:hover{border-color:var(--teal);color:var(--teal)}
+.page-btn.active{background:var(--teal);border-color:var(--teal);color:#fff;cursor:default}
+.page-btn.disabled{opacity:.4;cursor:not-allowed}
+.page-gap{color:var(--texto-mute);padding:0 2px}
+.page-info{margin-left:10px;color:var(--texto-mute);font-size:13px}
+
+/* ---- Mapa de calor ---- */
+.heat-wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.heat-svg{background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);padding:10px}
+.heat-legend{display:flex;flex-direction:column;gap:8px;font-size:13px}
+.heat-legend .sw{width:26px;height:14px;border-radius:4px;display:inline-block;margin-right:8px;vertical-align:middle}
+
+/* ---- KPIs ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:18px}
+.kpi{background:var(--panel);border:1px solid var(--linea);
+  border-radius:var(--radio);padding:16px 18px;border-left:4px solid var(--teal);box-shadow:var(--sombra)}
+.kpi.amber{border-left-color:var(--lima-ink)}
+.kpi.blue{border-left-color:var(--lima-ink)}
+.kpi .k-lbl{font-size:12px;color:var(--texto-mute);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.kpi .k-val{font-family:var(--fuente-titulo);font-size:34px;font-weight:600;line-height:1.1;margin:4px 0}
+.kpi .k-sub{font-size:12px;color:var(--texto-mute)}
+.compbar{display:flex;height:16px;border-radius:999px;overflow:hidden;margin:6px 0 10px}
+.compbar span{display:block}
+.complegend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px}
+.complegend .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px}
+
+/* ---- Mapa sector×línea ---- */
+.mapgrid{display:grid;gap:8px;margin-top:8px}
+.map-h{text-align:center;font-weight:800;color:var(--texto-mute);padding-bottom:4px}
+.map-row{display:flex;align-items:center;justify-content:center;color:var(--texto-mute);font-weight:700;font-size:13px}
+.map-cell{border-radius:10px;min-height:76px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;border:1px solid var(--linea)}
+.map-cell.empty{background:repeating-linear-gradient(45deg,#F0EFEC,#F0EFEC 8px,#E7E6E2 8px,#E7E6E2 16px)}
+.map-n{font-size:24px;font-weight:800}
+.map-tr{font-size:11px;opacity:.85}
+.map-pasillo{background:#EFEEEA;border:1px solid var(--linea);border-radius:8px;display:flex;
+  align-items:center;justify-content:center;min-width:34px}
+.map-pasillo span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;letter-spacing:2px;color:var(--texto-mute)}
+
+/* ---- Panel de salud / worker ---- */
+.hpanel{display:flex;gap:22px;flex-wrap:wrap;font-size:14px}
+.hpanel .hi{display:flex;align-items:center;gap:7px;color:var(--texto-mute)}
+.hpanel .hi b{color:var(--texto)}
+.statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px 20px;margin-top:8px}
+.statgrid .st{display:flex;justify-content:space-between;font-size:13px;border-bottom:1px dashed var(--linea);padding:4px 0}
+.statgrid .st b{color:var(--texto)}
+.client-mode .topbar{display:none}
+.client-mode .app{max-width:1100px}
+
+/* ---- Modal ---- */
+.modal-back{position:fixed;inset:0;background:rgba(29,30,28,.42);display:flex;
+  align-items:center;justify-content:center;z-index:50;padding:20px}
+.modal{background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);
+  width:min(560px,100%);max-height:90vh;overflow:auto;box-shadow:0 18px 50px rgba(29,30,28,.22)}
+.modal-camera-config{width:min(760px,100%);display:flex;flex-direction:column;overflow:hidden}
+.modal-camera-config .head,.modal-camera-config .foot{flex:none}
+.modal-camera-config .content{min-height:0;overflow-y:auto}
+.modal .head{display:flex;justify-content:space-between;align-items:center;
+  padding:16px 18px;border-bottom:1px solid var(--linea)}
+.modal .content{padding:18px}
+.modal .foot{display:flex;justify-content:flex-end;gap:10px;padding:14px 18px;border-top:1px solid var(--linea)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid .full{grid-column:1/-1}
+.modal-camera-config .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.modal-camera-config .form-grid>*{min-width:0}
+.modal-camera-config .form-grid input,.modal-camera-config .form-grid select{
+  box-sizing:border-box;width:100%;min-width:0}
+@media(max-width:780px){
+  .modal-camera-config .form-grid{grid-template-columns:minmax(0,1fr)}
+  .modal-camera-config .form-grid .full{grid-column:1}
+}
+
+/* ---- Demo ---- */
+.demo-stage{position:relative;max-width:760px;margin:0 auto;background:#ECEBE7;
+  border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden;
+  min-height:300px;display:flex;align-items:center;justify-content:center}
+/* la imagen define el tamaño del recuadro → las cajas se alinean exactas */
+.demo-stage img{width:100%;height:auto;display:block}
+.scanline{position:absolute;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--lima),transparent);
+  box-shadow:0 0 18px 4px rgba(180,255,72,.6);top:0}
+.scan-grid{position:absolute;inset:0;background-image:
+  linear-gradient(rgba(0,111,102,.08) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(0,111,102,.08) 1px,transparent 1px);
+  background-size:32px 32px;pointer-events:none}
+@keyframes sweepdown{0%{top:0;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:calc(100% - 3px);opacity:0}}
+.sweeping .scanline{animation:sweepdown 1.8s ease-in-out forwards}
+.demo-stage img{opacity:0;transition:opacity .35s ease}
+.demo-stage img.shown{opacity:1}
+.bbox-layer .bbox{opacity:0;animation:bboxin .35s ease forwards}
+@keyframes bboxin{from{opacity:0;transform:scale(1.15)}to{opacity:1;transform:none}}
+
+/* ---- Chips de especie (Demo) ---- */
+.sp-chips{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.sp-chip{display:flex;align-items:center;gap:10px;background:var(--panel);
+  border:1px solid var(--linea);border-left-width:4px;border-radius:12px;
+  padding:10px 16px;min-width:150px;box-shadow:var(--sombra)}
+.sp-emoji{font-size:24px}
+.sp-name{font-weight:800;font-size:15px}
+.sp-tipo{font-size:11px;color:var(--texto-mute)}
+
+/* ---- Toast ---- */
+#toast-root{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:60}
+.toast{background:var(--panel);border:1px solid var(--linea);border-left:4px solid var(--teal);
+  padding:12px 16px;border-radius:var(--radio-s);box-shadow:var(--sombra);font-size:14px;color:var(--texto);
+  animation:slidein .2s ease}
+.toast.err{border-color:var(--rojo);border-left-color:var(--rojo)}
+@keyframes slidein{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+
+/* ---- Estados vacíos / carga ---- */
+.empty{text-align:center;padding:60px 20px;color:var(--texto-mute)}
+.empty .big{font-size:44px;margin-bottom:10px;opacity:.7}
+.spinner{width:34px;height:34px;border:3px solid var(--linea);border-top-color:var(--teal);
+  border-radius:50%;animation:spin .8s linear infinite;margin:40px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Etiqueta y valor, juntos y legibles.
+   `space-between` a secas funciona en una tarjeta estrecha y se rompe en una ancha: en 1.200 px
+   la etiqueta queda pegada al borde izquierdo y su valor al derecho, y hay que cruzar la
+   pantalla para emparejarlos. El `gap` grande los separa lo justo y la linea de puntos los une. */
+/* Ficha de fauna: titulo y parrafo, no etiqueta y valor. */
+.ficha-bloque{padding:8px 0;border-top:1px dashed var(--linea)}
+.ficha-bloque b{display:block;font-size:13px;margin-bottom:3px}
+.ficha-bloque p{margin:0;font-size:13px;line-height:1.5}
+.nota-pendiente{margin:0 0 16px;padding:9px 12px;border-radius:var(--radio-s);
+  background:#FFF6E5;border:1px solid #F2D9A8;color:#7A5B1E;font-size:13px}
+
+.kv{display:flex;justify-content:space-between;gap:24px;padding:5px 0;
+    border-bottom:1px dashed var(--linea);font-size:13px}
+.kv>:first-child{flex:0 1 auto;min-width:0}
+.kv>:last-child{flex:0 0 auto;text-align:right}
+.kv:last-child{border-bottom:0}
+.kv b{color:var(--texto)}
+
+/* ---- Usuarios ---- */
+.user-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.user-form .field{display:flex;flex-direction:column;gap:5px;font-size:13px}
+.user-form input,.user-form select{width:100%}
+@media(max-width:560px){.user-form{grid-template-columns:1fr}}
+
+/* ---- Login (página de inicio, estilo invernadero + glass) ---- */
+body.logged-out{margin:0}
+body.logged-out .topbar{display:none}
+body.logged-out #app.app{max-width:none;margin:0;padding:0}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+  background:linear-gradient(rgba(20,40,30,.28),rgba(20,40,30,.42)),url('/assets/login-bg.jpg') center/cover no-repeat fixed}
+.login-card{width:100%;max-width:400px;padding:38px 34px;border-radius:22px;text-align:center;
+  background:rgba(255,255,255,.72);backdrop-filter:blur(14px) saturate(1.1);-webkit-backdrop-filter:blur(14px) saturate(1.1);
+  border:1px solid rgba(255,255,255,.6);box-shadow:0 22px 60px rgba(15,35,25,.35)}
+.login-logo{width:76px;height:76px;display:block;margin:0 auto 6px}
+.login-brand{font-family:var(--fuente-titulo);font-weight:700;letter-spacing:3px;color:var(--teal);font-size:24px}
+.login-title{font-family:var(--fuente-titulo);font-weight:600;color:var(--tinta,#1D1E1C);font-size:22px;margin:6px 0 22px}
+.login-input{width:100%;box-sizing:border-box;margin-bottom:14px;padding:14px 16px;border:1px solid rgba(0,0,0,.08);
+  border-radius:12px;background:rgba(255,255,255,.92);font:inherit;font-size:15px;color:var(--tinta,#1D1E1C)}
+.login-input::placeholder{color:#8A8A8A}
+.login-input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,111,102,.15);outline:none}
+.login-btn{width:100%;margin-top:6px;padding:14px;font-size:16px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;text-align:center}
+.login-err{color:#fff;background:rgba(224,68,73,.92);border-radius:10px;padding:10px 12px;font-size:13px;margin:0 0 12px}
+.login-forgot{display:block;margin-top:20px;color:var(--teal);font-size:13.5px;font-weight:500;text-decoration:none}
+.login-forgot:hover{text-decoration:underline}
+
+/* ---- Ajuste de color ---- */
+.color-layout{display:grid;grid-template-columns:340px 1fr;gap:18px;align-items:start}
+.color-slider{margin:10px 0}
+.color-slider input[type=range]{width:100%;margin-top:6px;accent-color:var(--teal)}
+.color-compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.color-compare figure{margin:0}
+.color-compare figcaption{margin-top:6px;font-size:12px;text-align:center}
+.color-preview{width:100%;border-radius:12px;border:1px solid var(--linea);display:block;background:#ECEBE7}
+@media(max-width:820px){.color-layout{grid-template-columns:1fr}.color-compare{grid-template-columns:1fr}}
+
+/* ---- Panel de control por trampa ---- */
+.ctrl-layout{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:start}
+.ctrl-card{box-shadow:var(--sombra)}
+/* Etiqueta sobre la cámara: en vivo o foto vieja. Sin esto, los tres caminos del snapshot
+   —empuje, directo y archivo— se veían exactamente igual. */
+/* La caja manda en el tamaño, y las dos imágenes se apilan dentro: el directo arriba y la
+   última imagen guardada debajo. Así, mientras el vídeo arranca o se reengancha, el hueco no
+   se queda gris — se ve la última foto real, atenuada y con su edad escrita encima. */
+.cam-caja{position:relative;aspect-ratio:4/3;border-radius:12px;border:1px solid var(--linea);
+  background:#ECEBE7;overflow:hidden}
+.ctrl-cam,.cam-fondo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  display:block;background:transparent}
+/* `display:block` gana a `[hidden]`, así que sin esto ocultar una capa no la ocultaría. */
+.ctrl-cam[hidden],.cam-fondo[hidden]{display:none}
+/* Atenuada solo cuando NO es el directo: es una foto del pasado y tiene que notarse. */
+.cam-fondo.vieja{filter:saturate(.78) brightness(.92)}
+.cam-estado{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;
+  gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;
+  background:rgba(27,67,50,.88);color:#fff;backdrop-filter:blur(2px)}
+.cam-estado.archivo{background:rgba(232,135,27,.94)}
+.cam-estado.sin{background:rgba(29,30,28,.92)}
+/* Píldora y no texto suelto: sobre una foto clara o sobre el gris de «sin imagen», un texto
+   blanco a pelo no se lee, y esta web se mira en un invernadero con sol directo. */
+.cam-aviso{position:absolute;left:10px;bottom:10px;max-width:calc(100% - 20px);
+  padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;
+  background:rgba(29,30,28,.86);color:#fff;backdrop-filter:blur(2px)}
+.cam-aviso:empty{display:none}
+/* 44 px de alto: se pulsa con guantes, que es como se usa esto en el invernadero. */
+.cam-retry{position:absolute;right:10px;bottom:10px;min-height:44px}
+.ctrl-controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px}
+.ctrl-controls .slrow{display:flex;align-items:center;gap:8px}
+.ctrl-controls input[type=range]{flex:1;accent-color:var(--teal)}
+.ctrl-batbox{margin-bottom:6px}
+.bat-bar{margin-top:8px;height:22px;border-radius:999px;background:var(--linea);overflow:hidden;border:1px solid var(--linea-2)}
+.bat-fill{height:100%;background:var(--teal);border-radius:999px;transition:width .3s}
+.ctrl-hr{border:none;border-top:1px solid var(--linea);margin:14px 0}
+.ctrl-stat{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:7px 0;
+    border-bottom:1px dashed var(--linea);font-size:14px}
+.ctrl-stat>:last-child{flex:0 0 auto;text-align:right}
+.ctrl-card,.ctrl-stat{min-width:0}
+.ctrl-stat{gap:10px;flex-wrap:wrap}
+.ctrl-stat>:last-child{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.ctrl-error b{color:var(--rojo-texto)}
+.ctrl-alert{background:var(--rojo-texto);color:#fff}
+.ctrl-reading-time{font-size:13px;text-align:right;margin:3px 0 7px}
+.ctrl-photo{margin:10px 0;min-width:0}
+.ctrl-photo-link{display:flex;align-items:center;gap:10px;min-width:0;overflow-wrap:anywhere}
+.ctrl-photo img{width:68px;height:52px;object-fit:cover;border-radius:7px;flex:none}
+.ctrl-log-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.ctrl-log-actions .muted{flex-basis:100%;font-size:13px}
+.ctrl-log{white-space:pre-wrap;overflow-wrap:anywhere;max-height:60vh;overflow:auto}
+.ctrl-stat:last-child{border-bottom:none}
+@media(max-width:820px){.ctrl-layout{grid-template-columns:1fr}.ctrl-controls{grid-template-columns:1fr}}
+@media(max-width:820px){.ctrl-sleep .ctrl-card:last-child{order:-1}}
+
+/* ---- Lightbox (imagen completa + cajas, con zoom) ---- */
+.lightbox{position:fixed;inset:0;background:rgba(10,15,12,.94);z-index:100;
+  display:flex;align-items:flex-start;justify-content:flex-start;overflow:auto;
+  padding:calc(70px + env(safe-area-inset-top)) 20px 20px;cursor:zoom-out}
+.lb-stage{position:relative;flex:0 0 auto;cursor:zoom-in;border-radius:4px;overflow:hidden;
+  box-shadow:0 12px 48px rgba(0,0,0,.55);margin:auto}
+.lb-stage.zoomed{cursor:grab;touch-action:none}
+.lb-stage.zoomed.dragging{cursor:grabbing}
+.lb-img{width:100%;height:100%;display:block;object-fit:contain}
+.lb-tools{position:fixed;top:calc(16px + env(safe-area-inset-top));
+  right:calc(18px + env(safe-area-inset-right));display:flex;gap:10px;z-index:101}
+.lb-btn{width:42px;height:42px;border-radius:999px;border:none;background:rgba(255,255,255,.16);
+  color:#fff;font-size:17px;cursor:pointer;display:grid;place-items:center;text-decoration:none}
+.lb-btn:hover{background:rgba(255,255,255,.3)}
+
+/* ---- Selección y descarga en grupo + arrastrar-soltar ---- */
+.thumb-wrap .gal-sel{position:absolute;top:8px;left:8px;width:20px;height:20px;cursor:pointer;
+  z-index:3;accent-color:var(--teal);filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+.card.selected{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal)}
+.gal-selbar{display:flex;align-items:center;gap:8px;background:var(--teal-tint);
+  border:1px solid var(--teal);border-radius:999px;padding:5px 8px 5px 14px;font-size:13px;color:var(--teal)}
+.grid.gal.dropping{outline:3px dashed var(--teal);outline-offset:6px;border-radius:14px;background:var(--teal-tint)}
+
+/* ---- Barra de progreso de subida ---- */
+.up-panel{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:60;
+  width:min(420px,calc(100vw - 32px));background:#fff;border:1px solid var(--linea);
+  border-radius:14px;box-shadow:0 12px 40px rgba(29,30,28,.20);padding:14px 16px;
+  animation:up-in .22s ease}
+@keyframes up-in{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+.up-top{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--teal);font-size:14px}
+.up-top b{color:var(--tinta);font-variant-numeric:tabular-nums}
+.up-track{height:9px;background:var(--linea);border-radius:999px;overflow:hidden;margin:10px 0 8px}
+.up-fill{height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--teal),var(--lima-ink));transition:width .18s ease}
+.up-name{font-size:12px;color:var(--texto-mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.up-panel.up-ok .up-fill{background:linear-gradient(90deg,var(--teal),var(--lima))}
+.up-panel.up-ok .up-top b{color:var(--lima-texto)}
+.up-panel.up-err .up-fill{background:var(--rojo)}
+.up-panel.up-err .up-top b{color:var(--rojo-texto)}
+
+/* ---- Plano del invernadero ----
+   Sustituye a la rejilla sector×línea: un técnico se orienta por la forma de la nave, el
+   pasillo y las líneas de cultivo, no por una matriz. */
+.plano{background:#fff;border:1px solid var(--linea);border-radius:var(--radio);padding:10px;
+  overflow-x:auto}
+.plano svg{display:block;min-width:420px}
+.plano-leyenda{margin-top:10px}
+.lg-fila{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px}
+.lg-item{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:12px}
+.lg-item i{width:16px;height:12px;border-radius:3px;display:inline-block;
+  border:1px solid rgba(0,0,0,.15)}
+
+/* ---- Detecciones: color por especie, etiqueta solo cuando cabe ----
+   Con cientos de insectos, las etiquetas se tapaban entre ellas y tapaban la foto. El color
+   dice la especie sin ocupar sitio; la leyenda de abajo dice cuántas hay de cada una. */
+.bbox{border-color:var(--c,var(--lima))}
+.bbox span{background:var(--c,var(--teal))}
+.bbox.sin-etiqueta span{display:none}
+.esp-leyenda{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.esp-chip{display:inline-flex;align-items:center;gap:7px;background:var(--panel);
+  border:1px solid var(--linea);border-radius:999px;padding:4px 12px;font-size:13px}
+.esp-chip i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.esp-chip b{font-size:14px}
+
+/* ---- Sensores en directo ---- */
+.datos-caja{margin-top:14px;padding:12px;border:1px solid var(--linea);border-radius:var(--radio-s);
+  background:var(--panel)}
+
+/* Un valor que ya no se toca: se enseña, no se ofrece. */
+.fijo{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--teal)}
+
+/* Usuario dado de baja: se ve, pero apagado. */
+.card.inactivo{opacity:.62}
+.card.inactivo .body b{text-decoration:line-through}
+/* Trampas: captura y actividad primero; infraestructura bajo demanda. */
+.trampas-view{font-size:16px;line-height:1.5}
+.trampas-view .view-head h1{margin:0}
+.trampas-total,.trampas-view .muted{color:var(--gris-texto)}
+.trampas-view .btn,.trampas-view select,.trampas-view input{min-height:48px;min-width:48px;font-size:16px}
+.trampas-view .trap-primary{min-height:56px;justify-content:center}
+.trampas-view .filters select{max-width:100%}
+.trap-list{display:grid;gap:24px}
+.trap-item{display:grid;grid-template-columns:minmax(240px,36%) minmax(0,1fr)}
+.trap-item:hover{transform:none;box-shadow:var(--sombra);border-color:var(--linea)}
+.trap-preview{position:relative;display:flex;align-items:center;justify-content:center;min-height:260px;background:var(--teal-tint);color:var(--teal-700);padding:16px}
+.trap-preview img{display:block;width:100%;height:100%;max-height:380px;object-fit:contain}
+.trap-preview-label{position:absolute;left:16px;bottom:16px;background:var(--panel);padding:6px 12px;border-radius:var(--radio-s)}
+.trap-content{padding:24px;min-width:0;overflow-wrap:anywhere}
+.trap-content p{margin:6px 0}
+.trap-identity{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.trap-identity h2{font-size:24px;margin:0}
+.trampas-view .tag{font-size:16px}
+.trampas-view .trap-offline{color:var(--rojo-texto);background:var(--panel)}
+.trap-result{border-left:4px solid var(--teal);padding:10px 14px;margin:20px 0}
+.trap-result strong{font-size:22px;line-height:1.3}
+.trap-result-unknown{border-color:var(--linea-2)}
+.trap-history{font-size:16px}
+.trap-network{overflow-wrap:anywhere}
+.trap-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+.trap-incidents{padding:12px 16px;border-left:4px solid var(--rojo);background:var(--panel);margin-bottom:18px}
+.trap-system{margin-top:28px;border-top:1px solid var(--linea);padding-top:12px}
+.trap-system summary{cursor:pointer;min-height:48px;padding:12px 0;overflow-wrap:anywhere}
+.trap-system-link{color:var(--teal);font-weight:700;margin-left:16px;text-decoration:underline;text-underline-offset:4px}
+.trap-system-panels{margin-top:16px}
+.trampas-view .trap-system-panels .field,.trampas-view .trap-system-panels .st,.trampas-view .trap-system-panels .hi{font-size:16px}
+.trap-system-panels input{width:100%;max-width:180px}
+.trampas-view :focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+/* LA CABECERA NO SE TOCA DESDE UNA VISTA. Aqui habia tres reglas `body:has(.trampas-view)`
+   que agrandaban a 48 px **solo las pildoras que son botones** (disco, avisos, Salir) y
+   dejaban las demas (usuario, IA, servidor) a su tamano: la fila salia con alturas distintas
+   y descuadrada. Lo vio Antonio nada mas desplegar. Y ademas la cabecera es COMPARTIDA: con
+   esas reglas cambiaba de forma segun la vista en la que estuvieras, que es justo lo que no
+   puede hacer un componente comun. Los objetivos tactiles de la cabecera van en la tanda de
+   navegacion movil, aplicados a TODAS las pildoras y para toda la web, no vista por vista. */
+@media(max-width:650px){
+  .trap-item{grid-template-columns:minmax(0,1fr)}
+  .trap-preview{min-height:0;aspect-ratio:4/3}
+  .trap-content{padding:18px}
+  .trap-identity h2{font-size:22px}
+  .trap-actions .trap-primary{width:100%}
+  .trampas-view .view-head{gap:12px}
+  .trampas-view .view-head>.trap-primary{width:100%}
+  .trampas-view .filters{align-items:stretch}
+  .trampas-view .filters>select{width:100%}
+  .trap-system-panels .hpanel{gap:16px}
+  .ctrl-network{align-items:flex-start;flex-wrap:wrap;gap:6px}
+  .ctrl-network>:last-child{flex:1 1 100%;text-align:left;overflow-wrap:anywhere}
+}
+
+/* Cabecera compartida: una misma medida para botones y estados. */
+.header-menu{display:flex;align-items:center;gap:16px;flex:1;flex-wrap:wrap;min-width:0}
+.menu-toggle{display:none}
+.nav-group{display:flex;gap:6px;flex-wrap:wrap}
+.nav-group[hidden],.pill[hidden],.mainnav a[hidden]{display:none}
+.mainnav a,.brand{display:flex;align-items:center}
+.status-pills{flex-wrap:wrap;min-width:0}
+/* TODAS las pildoras iguales, sean `button` o `span`. Esto es lo que arregla el descuadre de
+   la cabecera: la vez anterior el tamaño se le puso solo a `button.pill` y la fila salia con
+   dos alturas distintas. Antonio lo vio al instante. */
+.status-pills .pill{display:inline-flex;align-items:center;justify-content:center;
+  white-space:normal;text-align:center}
+.status-pills .pill[hidden]{display:none}
+/* LOS 48 px SON PARA EL DEDO, NO PARA EL RATON.
+   Los objetivos tactiles grandes son para el invernadero: movil, con guantes y al sol. En el
+   escritorio, donde se maneja con raton, unas pildoras de 48 px inflan la cabecera y la
+   descuadran -- que es justo lo que se estaba arreglando. Se aplican donde sirven: en la
+   pantalla estrecha y en cualquier dispositivo cuyo puntero sea grueso (tactil), sea del
+   ancho que sea. */
+@media(max-width:820px),(pointer:coarse){
+  .mainnav a,.brand{min-height:48px}
+  .status-pills .pill{min-height:48px;min-width:48px;font-size:16px;padding:10px 14px}
+}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+/* Plano completo y lecturas accesibles sin depender del tamaño del SVG. */
+.mapa-view{font-size:16px;line-height:1.5;min-width:0}
+.map-intro{margin:0 0 22px;color:var(--texto-mute);max-width:70ch}
+.mapa-view .btn,.mapa-view select{min-height:44px;font-size:15px}
+.map-filters{background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);padding:14px 18px;align-items:end;gap:10px;box-shadow:0 2px 10px rgba(29,30,28,.025)}
+.map-filters .field{flex:1;min-width:0;font-size:13px;color:var(--texto-mute)}
+.map-filters select{width:100%;max-width:100%}
+.mapa-view .map-refresh{color:var(--teal);min-width:44px;padding-inline:14px;font-size:15px}
+.map-actions{position:relative}
+.map-actions>summary{display:flex;align-items:center;justify-content:center;min-width:48px;min-height:48px;
+  border:1px solid var(--linea-2);border-radius:var(--radio-s);background:var(--panel);color:var(--teal);
+  font-size:22px;font-weight:800;cursor:pointer;list-style:none}
+.map-actions>summary::-webkit-details-marker{display:none}
+.map-actions[open]>summary{border-color:var(--teal);background:var(--teal-tint)}
+.map-actions-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:5;width:max-content;max-width:min(280px,80vw);
+  padding:8px;background:var(--panel);border:1px solid var(--linea-2);border-radius:var(--radio-s);box-shadow:var(--sombra)}
+.map-actions-menu .btn{width:100%;justify-content:flex-start}
+.map-summary{margin:18px 0 20px;background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden;box-shadow:0 2px 10px rgba(29,30,28,.025)}
+.map-summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.map-summary-item{display:flex;flex-direction:column;gap:5px;min-width:0;padding:19px 22px;border-right:1px solid var(--linea)}
+.map-summary-item:last-child{border-right:0}
+.map-summary-label{color:var(--texto-mute);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.map-summary-item strong{font-size:21px;line-height:1.2;color:var(--teal-700);overflow-wrap:anywhere}
+.map-summary-item small{color:var(--texto-mute);font-size:12px}
+.map-summary-ok strong,.map-ok{color:var(--lima-texto);font-weight:700}
+.map-summary-incident strong,.map-incident{color:var(--rojo-texto);font-weight:700}
+.map-summary-pending strong{color:var(--teal)}
+.map-summary-meta{padding:10px 22px;border-top:1px solid var(--linea);font-size:13px;overflow-wrap:anywhere;background:#FBFBFA}
+.map-empty{display:flex;align-items:flex-start;gap:18px;padding:26px;margin-top:20px;background:var(--panel);
+  border:1px solid var(--linea-2);border-radius:var(--radio)}
+.map-empty-icon{display:grid;place-items:center;flex:0 0 46px;height:46px;border-radius:50%;background:var(--teal-tint);
+  color:var(--teal);font-size:28px;font-weight:700}
+.map-empty h2{font-size:22px}
+.map-empty p{margin:6px 0 16px;color:var(--texto-mute)}
+.map-layout{display:grid;grid-template-columns:minmax(290px,.9fr) minmax(0,1.4fr);grid-template-areas:'traps plan';gap:20px;align-items:start}
+.map-plan,.map-traps{min-width:0;background:var(--panel);border:1px solid var(--linea);border-radius:var(--radio);padding:22px;box-shadow:0 3px 14px rgba(29,30,28,.03)}
+.map-plan{grid-area:plan}
+.map-traps{grid-area:traps;max-height:min(700px,calc(100vh - 180px));overflow-y:auto}
+.map-plan h2,.map-traps h2{font-size:21px}
+.map-plan-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.map-plan-head h2{margin-right:auto}
+.map-eyebrow{display:block;color:var(--teal);font-size:11px;font-weight:800;letter-spacing:.12em;margin-bottom:4px}
+.map-expand{min-width:0;padding-inline:12px;color:var(--teal)}
+.map-plan>p{margin:0 0 18px;color:var(--texto-mute);font-size:13px}
+.map-plan-canvas{display:grid;place-items:center;min-height:260px;padding:14px 16px;background:#F7F9F6;border:1px solid #E8EDE6;border-radius:10px}
+.map-plan-canvas .plano{width:100%}
+.mapa-view .plano{padding:0;border:0;overflow:visible}
+.mapa-view .map-plan-canvas .plano svg{display:block;min-width:0;width:100%;height:auto;max-height:510px}
+.mapa-view .plano svg text{fill:var(--tinta)}
+.map-row.is-context{opacity:.065}
+.map-row.has-trap{opacity:.9;stroke-width:2.6}
+.map-line-label.has-trap{font-weight:800;fill:var(--teal)}
+.map-marker{cursor:pointer;outline:none}
+.map-marker-halo{fill:none;stroke:var(--lima);stroke-width:0;opacity:0;vector-effect:non-scaling-stroke;pointer-events:none}
+.map-marker-hit{r:32px;fill:transparent;stroke:none;pointer-events:all}
+.map-marker-shape{vector-effect:non-scaling-stroke}
+.map-marker.is-selected .map-marker-halo,.map-marker:focus .map-marker-halo{stroke-width:5px;opacity:1}
+.map-marker:focus .map-marker-shape{stroke:var(--teal);stroke-width:3px}
+.map-traps-head,.map-trap-main,.map-trap-reading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.map-traps-head{padding-bottom:12px;border-bottom:1px solid var(--linea)}
+.map-traps-head h2{margin:0}
+.map-trap{padding:16px 4px;border-bottom:1px solid var(--linea);border-radius:var(--radio-s);overflow-wrap:anywhere;cursor:pointer}
+.map-trap:last-child{border-bottom:0}
+.map-trap.is-selected{background:var(--teal-tint);box-shadow:inset 0 0 0 2px var(--teal);padding-inline:12px}
+.map-trap.has-incident{border-left:3px solid var(--rojo);padding-left:12px}
+.map-trap.has-incident.is-selected{padding-left:12px}
+.map-trap h3{margin:0;font-size:17px}
+.map-trap-main{align-items:flex-start}
+.map-trap-main span{flex:0 0 auto;font-size:12px}
+.map-trap-position{margin:3px 0 0;font-size:13px}
+.map-trap-reading{margin-top:14px;align-items:flex-end}
+.map-trap-reading strong{font-size:14px;font-weight:600;line-height:1.35}
+.map-trap-reading .btn{flex:0 0 auto}
+.mapa-view .muted{color:#555952}
+.mapa-view .plano-leyenda{background:transparent;padding:14px 0 0;border:0;border-top:1px solid var(--linea);border-radius:0;margin-top:18px}
+.lg-fila{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap}
+.lg-fila>b{font-size:12px;color:var(--texto-mute);text-transform:uppercase;letter-spacing:.04em}
+.lg-item{display:inline-flex;align-items:center;gap:6px;font-size:12px}
+.map-key{width:14px;height:14px;border:1px solid rgba(29,30,28,.14);border-radius:3px}
+.map-key-low{background:#D5E8E4}.map-key-mid{background:#80B7AF}.map-key-high{background:#006F66}.map-key-unknown{background:#CFD5CF}
+.map-legend-short{margin:8px 0 0;font-size:14px}
+.map-help{margin-top:8px}
+.map-help summary{padding:7px 0 2px;color:var(--teal);font-size:13px;font-weight:700;cursor:pointer}
+.map-help-copy{font-size:14px}
+.map-help-copy p{margin:8px 0}
+.client-map-head{margin-top:20px}
+.client-map-footer{margin-top:20px;text-align:center}
+.map-plan-dialog{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:var(--panel);color:var(--tinta)}
+.map-plan-dialog::backdrop{background:rgba(29,30,28,.58)}
+.map-dialog-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  min-height:68px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--linea-2)}
+.map-dialog-head h2{margin:0;font-size:22px}
+.map-dialog-viewport{height:calc(100dvh - 69px);overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y pinch-zoom;padding:16px}
+.map-dialog-viewport .plano{width:max-content;min-width:900px;max-width:none;padding:0;border:0;overflow:visible}
+.map-dialog-viewport .plano svg{width:900px;min-width:900px;height:auto}
+.map-plan-dialog .map-marker-hit{r:25px}
+.ctrl-layout{min-width:0}
+.ctrl-layout .btn{min-height:48px;min-width:48px;font-size:16px}
+.ctrl-card .btn:not(.ghost){min-height:56px}
+.ctrl-controls{grid-template-columns:1fr}
+.ctrl-layout .field,.ctrl-layout .fijo,.ctrl-stat,.ctrl-layout .muted,.cam-estado,.cam-aviso{font-size:16px}
+.cam-retry{min-height:48px}
+@media(max-width:900px){
+  .topbar{gap:12px;padding:10px 16px;justify-content:space-between;background:var(--panel)}
+  .menu-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:72px;min-height:48px;font:700 16px var(--fuente);color:var(--teal);background:var(--teal-tint);border:1px solid var(--teal);border-radius:var(--radio-s)}
+  .header-menu{display:none;flex-basis:100%;max-height:calc(100dvh - 80px);overflow-y:auto;padding:8px 0}
+  .header-menu.is-open{display:flex}
+  .mainnav{width:100%;margin:0;display:grid;gap:16px}
+  .nav-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .nav-group::before{content:attr(aria-label);grid-column:1/-1;font-weight:700;color:var(--teal)}
+  .mainnav a{font-size:16px;padding:12px;border-radius:var(--radio-s)}
+  .status-pills{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--linea-2);padding-top:16px}
+  .map-layout{grid-template-columns:minmax(0,1fr);grid-template-areas:'traps' 'plan'}
+  .map-traps{max-height:none}
+  .map-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .map-summary-item:nth-child(2n){border-right:0}
+  .map-summary-item:nth-child(n+3){border-top:1px solid var(--linea)}
+  .map-expand{display:inline-flex;align-items:center;justify-content:center}
+  .mapa-view .map-marker-hit{r:80px}
+}
+@media(max-width:480px){
+  .map-plan,.map-traps{padding:16px}
+  .map-filters .field{flex-basis:100%;width:100%}
+  .map-refresh{flex:1;justify-content:center}
+  .map-actions{flex:0 0 auto}
+  .mapa-view .view-head h1{font-size:28px}
+  .map-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .map-summary-item{padding:15px}
+  .map-summary-item:nth-child(odd){border-right:1px solid var(--linea)}
+  .map-summary-item:nth-child(even){border-right:0}
+  .map-summary-item:nth-child(n+3){border-top:1px solid var(--linea)}
+  .map-summary-item:last-child:nth-child(odd){grid-column:1/-1;border-right:0}
+  .map-summary-item strong{font-size:17px}
+  .map-empty{padding:20px;gap:12px}
+  .map-empty-icon{display:none}
+  .map-trap-reading{align-items:flex-end}
+  .map-plan-head{align-items:flex-start}
+  .map-plan-head h2{font-size:21px}
+  .map-expand{min-height:44px;white-space:nowrap}
+  .map-plan-canvas{min-height:210px;padding:8px}
+  .mapa-view .map-sector-label{font-size:42px}
+  .mapa-view .map-line-label{font-size:34px}
+  .mapa-view .map-line-label.is-minor{display:none}
+  .mapa-view .map-axis-title{display:none}
+  .mapa-view .map-entry-label{font-size:36px}
+  .lg-fila{gap:10px 14px}
+  .lg-fila>b{flex-basis:100%}
+}
+
+.status-pills .pill.off,.status-pills .pill.disk.critico{background:var(--rojo-texto)}
+.ctrl-layout .muted[style],.ctrl-layout .field[style]{font-size:16px!important}
+.modal.ancho{width:min(820px,100%);display:flex;flex-direction:column;overflow:hidden}
+.modal.ancho .content{min-height:0;overflow-y:auto}

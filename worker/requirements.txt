@@ -1,0 +1,10 @@
+# Worker de IA de ENTOMIRA (PC Windows · RTX 5060 Ti)
+# PyTorch CUDA se instala aparte con el índice de CUDA correcto para Blackwell (cu128):
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+# El resto:
+ultralytics>=8.4.0
+requests>=2.31
+python-dotenv>=1.0
+pillow>=10.0
+pyinstaller>=6.0
+# tkinter viene con Python en Windows.

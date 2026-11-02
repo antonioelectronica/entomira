@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ENTOMIRA · Monitorización de plagas</title>
+  <link rel="icon" href="/assets/logo-icon.svg" />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=chillax@400,500,600,700&f[]=satoshi@300,400,500,700,900&display=swap" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <!-- Nada del panel se pinta hasta saber si hay sesión: sin esto, al recargar se veía la
+       cabecera privada un instante antes del login. `boot()` quita la clase. -->
+  <style>body.auth-pendiente .topbar, body.auth-pendiente #app { visibility: hidden; }</style>
+  <!-- Mientras se espera la sesión, el fondo ya es el de lo que va a salir: la foto del login si
+       la última visita no tenía sesión, el del panel si la tenía. Sin esto había un destello blanco. -->
+  <script>
+    (function () {
+      var sin = true;
+      try { sin = localStorage.getItem('entomira_sesion') !== '1'; } catch (e) {}
+      if (!sin) return;
+      document.documentElement.classList.add('pre-login');
+      var l = document.createElement('link');           // la foto solo se pide si va a salir
+      l.rel = 'preload'; l.as = 'image'; l.href = '/assets/login-bg.jpg';
+      document.head.appendChild(l);
+    })();
+  </script>
+  <style>
+    html.pre-login, html.pre-login body.auth-pendiente { background: #22342a; }
+    html.pre-login body.auth-pendiente {
+      background: linear-gradient(rgba(20,40,30,.28), rgba(20,40,30,.42)), url('/assets/login-bg.jpg') center/cover no-repeat fixed, #22342a;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body class="auth-pendiente">
+  <header class="topbar">
+    <a class="brand" href="#/galeria">
+      <img src="/assets/logo-icon.svg" alt="ENTOMIRA" class="brand-mark" />
+      <span class="brand-name">ENTOMIRA</span>
+    </a>
+    <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="header-menu">Menú</button>
+    <div class="header-menu" id="header-menu">
+    <nav class="mainnav" id="mainnav" aria-label="Navegación principal">
+      <div class="nav-group" aria-label="Seguimiento">
+      <a href="#/galeria" data-route="galeria" id="nav-galeria">Galería</a>
+      <a href="#/trampas" data-route="trampas" class="admin-only" hidden>Trampas</a>
+      <a href="#/invernaderos" data-route="invernaderos" class="admin-only" hidden>Invernaderos</a>
+      <a href="#/mapa" data-route="mapa">Mapa</a>
+      </div>
+      <div class="nav-group admin-only" aria-label="Gestión" hidden>
+      <a href="#/plagas" data-route="plagas" class="admin-only" hidden>Plagas</a>
+      <a href="#/usuarios" data-route="usuarios" class="admin-only" hidden>Usuarios</a>
+      <a href="#/color" data-route="color" class="admin-only" hidden>Color</a>
+      <a href="#/demo" data-route="demo" class="admin-only" hidden>Demo</a>
+      </div>
+    </nav>
+    <div class="status-pills">
+      <span class="pill" id="pill-user" title="Usuario conectado" hidden></span>
+      <button class="pill" id="pill-avisos" title="Problemas detectados en el sistema" hidden></button>
+      <button class="pill" id="pill-disk" title="Almacenamiento del servidor (pulsa para ver el detalle)" hidden>💾…</button>
+      <span class="pill" id="pill-worker" title="Estado del Worker de IA">IA…</span>
+      <span class="pill" id="pill-server" title="Estado del servidor">Servidor…</span>
+      <button class="pill" id="btn-salir" title="Cerrar sesión" onclick="salir()">Salir ↦</button>
+    </div>
+    </div>
+  </header>
+  <script>
+    async function salir(){
+      // 1) borra la cookie de sesión
+      try{ await fetch('/api/v1/auth/logout', { method:'POST', cache:'no-store' }); }catch(e){}
+      try{ localStorage.setItem('entomira_sesion', '0'); }catch(e){}
+      // 2) invalida el Basic Auth que el navegador pudiera tener cacheado (credenciales falsas)
+      try{ const x=new XMLHttpRequest(); x.open('GET','/api/v1/auth/me',false,'logout','x'); x.send(); }catch(e){}
+      // 3) recarga limpia a la raíz → sale la página de login
+      location.replace('/?logout=' + Date.now());
+    }
+  </script>
+
+  <main id="app" class="app"></main>
+
+  <div id="modal-root"></div>
+  <div id="toast-root"></div>
+
+  <script src="/assets/app.js"></script>
+</body>
+</html>
